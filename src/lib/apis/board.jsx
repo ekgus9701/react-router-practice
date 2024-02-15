@@ -21,3 +21,31 @@ export async function fetchBoardList() {
   //   }
   return response;
 }
+
+export async function fetchBoard(boardId) {
+  const response = await instance.get("/board/" + boardId);
+
+  return response;
+}
+
+export async function postBoardList({ title, content, img }) {
+  const response = await instance.post("/board", {
+    title: title,
+    content: content,
+    img: img,
+  });
+  return response;
+}
+
+export async function fetchCommentList(boardId) {
+  try {
+    const queryString = `?boardId=${boardId}`;
+
+    const response = await instance.get(`/board/comments/${queryString}`);
+    //console.log(response);
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}

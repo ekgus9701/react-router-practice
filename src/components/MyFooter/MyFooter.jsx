@@ -14,7 +14,7 @@ export default function MyFooter({ brandTitle }) {
             {brandTitle}
           </a>
           <span className="mb-3 mb-md-0 text-body-secondary">
-            © 2023 Company, Inc
+            © 2024 Dahyeon Han
           </span>
         </div>
 

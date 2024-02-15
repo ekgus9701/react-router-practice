@@ -4,17 +4,14 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
+import { Justify } from "react-bootstrap-icons";
 
 export default function LoginPage() {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(isLoggedIn);
-  }, [isLoggedIn]);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -25,9 +22,12 @@ export default function LoginPage() {
         })
         .then((data) => {
           if (data.status === 201) {
+            localStorage.removeItem("login");
+            localStorage.setItem("login", "true");
             alert("로그인 성공");
-            setIsLoggedIn(true);
+
             navigate("/");
+            window.location.reload(true);
           }
         })
         .catch((err) => {
@@ -41,7 +41,14 @@ export default function LoginPage() {
 
   return (
     <div>
-      <Form style={{ display: "flex", flexDirection: "row" }}>
+      <Form
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Form.Group className="mb-3" style={{ margin: "5px" }}>
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -69,7 +76,14 @@ export default function LoginPage() {
         </Form.Group>
       </Form>
 
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Button
           variant="primary"
           style={{ margin: "0px 5px 5px 5px" }}

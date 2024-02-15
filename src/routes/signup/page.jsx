@@ -9,8 +9,11 @@ import { useNavigate } from "react-router-dom";
 export default function SignupPage() {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const navigate = useNavigate();
+  const flag = localStorage.getItem("login");
+  if (flag !== "true") localStorage.setItem("login", "false");
+
   const handleSignup = async () => {
     try {
       const response = await axios
@@ -23,10 +26,11 @@ export default function SignupPage() {
             console.log(data);
 
             alert("회원가입 성공");
-            navigate("/");
+            navigate("/board/login");
           }
         })
         .catch((err) => {
+          alert("회원가입 실패");
           console.log("err:", err);
         });
     } catch (error) {
@@ -36,7 +40,14 @@ export default function SignupPage() {
 
   return (
     <div>
-      <Form style={{ display: "flex", flexDirection: "row" }}>
+      <Form
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Form.Group className="mb-3" style={{ margin: "5px" }}>
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -64,10 +75,19 @@ export default function SignupPage() {
         </Form.Group>
       </Form>
 
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Button
           variant="primary"
-          style={{ margin: "0px 5px 5px 5px" }}
+          style={{
+            margin: "0px 5px 5px 5px",
+          }}
           className="signupButton"
           onClick={handleSignup}
         >
