@@ -22,8 +22,8 @@ export default function LoginPage() {
         })
         .then((data) => {
           if (data.status === 201) {
-            localStorage.removeItem("login");
-            localStorage.setItem("login", "true");
+            sessionStorage.removeItem("login");
+            sessionStorage.setItem("login", "true");
             alert("로그인 성공");
 
             navigate("/");

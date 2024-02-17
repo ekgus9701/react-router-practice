@@ -11,8 +11,8 @@ export default function SignupPage() {
   const [pw, setPw] = useState("");
 
   const navigate = useNavigate();
-  const flag = localStorage.getItem("login");
-  if (flag !== "true") localStorage.setItem("login", "false");
+  const flag = sessionStorage.getItem("login");
+  if (flag !== "true") sessionStorage.setItem("login", "false");
 
   const handleSignup = async () => {
     try {

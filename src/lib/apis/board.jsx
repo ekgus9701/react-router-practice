@@ -37,6 +37,19 @@ export async function postBoardList({ title, content, img }) {
   return response;
 }
 
+export async function rewriteBoardList(
+  boardId,
+  { title, content, img, updatedAt }
+) {
+  const response = await instance.put(`/board/${boardId}`, {
+    title: title,
+    content: content,
+    img: img,
+    updatedAt: updatedAt,
+  });
+  return response;
+}
+
 export async function fetchCommentList(boardId) {
   try {
     const queryString = `?boardId=${boardId}`;

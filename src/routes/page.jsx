@@ -2,9 +2,8 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 export default function MainPage() {
-  //localStorage.clear();
-  const flag = localStorage.getItem("login");
-  if (flag !== "true") localStorage.setItem("login", "false");
+  const flag = sessionStorage.getItem("login");
+  if (flag !== "true") sessionStorage.setItem("login", "false");
   let location = useLocation();
   console.log(location);
 

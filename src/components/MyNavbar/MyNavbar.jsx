@@ -14,11 +14,11 @@ export default function MyNavbar({ brandTitle, offCanvasTitle }) {
         .post("/api/board/logout")
         .then((data) => {
           console.log(data);
-          localStorage.setItem("login", "false");
+          sessionStorage.setItem("login", "false");
           setIsLoggedOut("true");
 
           alert("로그아웃 성공");
-          //window.location.reload();
+          window.location.reload();
         })
         .catch((err) => {
           alert("로그아웃 실패");
@@ -54,7 +54,7 @@ export default function MyNavbar({ brandTitle, offCanvasTitle }) {
             <Nav
               className={`justify-content-around flex-row pb-4 pb-${EXPAND_BREAKPOINT}-0`}
             >
-              {localStorage.getItem("login") === "true" ? (
+              {sessionStorage.getItem("login") === "true" ? (
                 <>
                   <a
                     className="flex-grow-1 text-center border border-dark border-end-0 nav-link"

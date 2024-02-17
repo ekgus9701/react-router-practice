@@ -5,7 +5,7 @@ import MainPage from "~/routes/page";
 import LoginPage from "~/routes/login/page";
 import SignupPage from "~/routes/signup/page";
 import BoardListPage from "~/routes/board/page";
-import BoardWritePage from "~/routes/board/write/page";
+import BoardWritePage from "~/routes/board/rewrite/page";
 import BoardDetailPage from "~/routes/board/detail/page";
 import Layout from "~/routes/layout";
 
@@ -30,13 +30,16 @@ export const mainRouter = [
           {
             path: "",
             element: <BoardListPage />,
-            index: true,
+            // index: true,
+            children: [
+              {
+                path: ":boardId/edit",
+                element: <BoardWritePage />,
+                index: true,
+              },
+            ],
           },
-          {
-            path: "write",
-            element: <BoardWritePage />,
-            index: true,
-          },
+
           {
             path: ":boardId",
             element: <BoardDetailPage />,

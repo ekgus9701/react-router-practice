@@ -4,21 +4,25 @@ import { fetchBoardList } from "~/lib/apis/board";
 import { postBoardList } from "~/lib/apis/board";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { Form } from "react-bootstrap";
+import { rewriteBoardList } from "~/lib/apis/board";
 
 export default function BoardListPage() {
   const [apiData, setApiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [show, setShow] = useState(false);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imgsrc, setImgsrc] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const navigate = useNavigate();
 
   // console.log(searchParams);
   // console.log(searchParams.getAll("where"));
@@ -32,7 +36,7 @@ export default function BoardListPage() {
         img: imgsrc,
       });
       setShow(false);
-      console.log(response);
+      //console.log(response);
       window.location.reload(true);
     } catch (error) {
       console.error("글 작성 중 에러 발생:", error);
@@ -42,6 +46,7 @@ export default function BoardListPage() {
   const callApi = async () => {
     try {
       const response = await fetchBoardList();
+      //console.log(response);
 
       setApiData(response);
     } catch (error) {
@@ -56,7 +61,7 @@ export default function BoardListPage() {
   return (
     <>
       <div style={{ display: "flex" }}>
-        {localStorage.getItem("login") === "true" ? (
+        {sessionStorage.getItem("login") === "true" ? (
           <Button
             variant="primary"
             onClick={handleShow}
@@ -115,6 +120,7 @@ export default function BoardListPage() {
       >
         {apiData.map((item) => (
           <Card style={{ width: "18rem", margin: "5px" }} key={item._id}>
+            {/* {console.log(item._id)} */}
             <Card.Img
               variant="top"
               src={
@@ -135,14 +141,28 @@ export default function BoardListPage() {
                   day: "2-digit",
                 })}
               </Card.Text>
-              <Link
-                to={`/board/${item._id}`}
-                key={item._id}
-                preventScrollReset
-                className="text-decoration-none"
-              >
-                <Button variant="primary">상세 보기</Button>
-              </Link>
+
+              <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                <Link
+                  to={`/board/${item._id}`}
+                  key={item._id}
+                  preventScrollReset
+                  className="text-decoration-none"
+                >
+                  <Button variant="primary">상세 보기</Button>
+                </Link>
+
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    navigate(`${item._id}/edit`);
+                  }}
+                >
+                  수정하기
+                </Button>
+
+                <Outlet />
+              </div>
             </Card.Body>
           </Card>
         ))}
