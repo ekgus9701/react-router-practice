@@ -8,6 +8,10 @@ import BoardListPage from "~/routes/board/page";
 import BoardWritePage from "~/routes/board/rewrite/page";
 import BoardDetailPage from "~/routes/board/detail/page";
 import Layout from "~/routes/layout";
+import Todo from "~/routes/todo/page";
+import { Provider } from "react-redux";
+
+import store from "~/store";
 
 export const mainRouter = [
   {
@@ -18,6 +22,16 @@ export const mainRouter = [
         path: "",
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: "/todo",
+        index: true,
+        element: (
+          <Provider store={store}>
+            {/* <Counter /> */}
+            <Todo />
+          </Provider>
+        ),
       },
       {
         path: "/board/",

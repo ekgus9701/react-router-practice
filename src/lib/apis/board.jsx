@@ -62,3 +62,42 @@ export async function fetchCommentList(boardId) {
     throw error;
   }
 }
+
+export async function deleteBoard(boardId) {
+  try {
+    //const queryString = `?boardId=${boardId}`;
+
+    const response = await instance.delete(`/board/${boardId}`);
+    //console.log(response);
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// router.post("/comments", authenticate, function (req, res, next) {
+//   const writer = req.user._id ? req.user._id : null;
+
+//   console.log(req.board);
+
+//   const commentData = { ...req.body, writer };
+
+//   Comment.create(commentData)
+//     .then((data) => {
+//       res.json(data);
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// });
+
+export async function postComment(comment, boardId) {
+  console.log(comment, boardId);
+  const response = await instance.post("/comments", {
+    content: comment,
+    board: boardId,
+  });
+  console.log("afhgjghj");
+  return response;
+}

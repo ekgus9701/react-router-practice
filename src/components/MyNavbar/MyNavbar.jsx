@@ -2,10 +2,13 @@ import React from "react";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 const EXPAND_BREAKPOINT = "md";
 
 export default function MyNavbar({ brandTitle, offCanvasTitle }) {
+  const todoObj = useSelector((todo) => todo);
+  //console.log(todoObj["todo"].todo.length);
   const [isLoggedOut, setIsLoggedOut] = useState("false");
 
   const handleLogout = async () => {
@@ -89,6 +92,9 @@ export default function MyNavbar({ brandTitle, offCanvasTitle }) {
               <Nav.Link href="/">Home</Nav.Link>
 
               <Nav.Link href="/board">게시판</Nav.Link>
+              <Nav.Link href="/todo">
+                todo({todoObj["todo"].todo.length})
+              </Nav.Link>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

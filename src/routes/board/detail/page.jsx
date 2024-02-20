@@ -1,16 +1,45 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "react-bootstrap";
-import { fetchBoard } from "~/lib/apis/board";
+import { Button, Container, Row } from "react-bootstrap";
+import { deleteBoard, fetchBoard } from "~/lib/apis/board";
 import { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import { fetchCommentList } from "~/lib/apis/board";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import { postComment } from "~/lib/apis/board";
+
 import ListGroup from "react-bootstrap/ListGroup";
 
 export default function BoardDetailPage() {
   // const navigate = useNavigate();
   const params = useParams();
+  const [commentData, setCommentData] = useState([]);
+  const [comment, setComment] = useState([]);
+
+  const handleDelete = async (boardId) => {
+    try {
+      const response = await deleteBoard(boardId);
+      //nav로 수정
+      window.location.reload(true);
+    } catch (error) {
+      console.error("글 삭제 중 에러 발생:", error);
+    }
+  };
+
+  const handleWriteComment = async (comment, boardId) => {
+    try {
+      //console.log(comment);
+      //setCommentData(comment);
+      //console.log(commentData);
+      const response = await postComment(comment, boardId);
+
+      window.location.reload(true);
+    } catch (error) {
+      console.error("댓글 작성 중 에러 발생:", error);
+    }
+  };
 
   const [boardData, setBoardData] = useState([]);
 
@@ -23,8 +52,6 @@ export default function BoardDetailPage() {
       console.error("API 호출 중 에러:", error);
     }
   };
-
-  const [commentData, setCommentData] = useState([]);
 
   const callComment = async () => {
     try {
@@ -56,8 +83,41 @@ export default function BoardDetailPage() {
         <Image src={boardData.img} style={{ width: "30rem", margin: "5px" }} />;
         <h1>{boardData.title}</h1>
         <p>{boardData.content}</p>
+        <Button
+          variant="primary"
+          style={{ background: "red", borderColor: "red" }}
+          onClick={() => handleDelete(params.boardId)}
+        >
+          {" "}
+          삭제하기
+        </Button>
         <hr />
+        {/* <FloatingLabel controlId="floatingTextarea2" label="Comments">
+          <Form.Control
+            as="textarea"
+            style={{ height: "100px" }}
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+          />
+        </FloatingLabel>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            margin: "10px 5px",
+          }}
+        >
+          <Button
+            variant="primary"
+            onClick={() => handleWriteComment(comment, params.boardId)}
+          >
+            {" "}
+            댓글달기
+          </Button>
+        </div> */}
       </div>
+
       {commentData.map((item) => (
         <div style={{ display: "flex", justifyContent: "center" }}>
           <ListGroup style={{ width: "50%" }}>

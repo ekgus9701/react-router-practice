@@ -28,7 +28,7 @@ export default function BoardListPage() {
   // console.log(searchParams.getAll("where"));
   // console.log(searchParams.getAll("query"));
 
-  const handleWrite = async () => {
+  const handleWrite = async (boardId) => {
     try {
       const response = await postBoardList({
         title: title,

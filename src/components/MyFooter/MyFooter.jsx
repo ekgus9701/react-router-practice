@@ -17,19 +17,6 @@ export default function MyFooter({ brandTitle }) {
             © 2024 Dahyeon Han
           </span>
         </div>
-
-        <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
-          <li className="ms-3">
-            <a className="text-body-secondary" href="#">
-              <Instagram size={24} />
-            </a>
-          </li>
-          <li className="ms-3">
-            <a className="text-body-secondary" href="#">
-              <Facebook size={24} />
-            </a>
-          </li>
-        </ul>
       </Container>
     </Container>
   );
